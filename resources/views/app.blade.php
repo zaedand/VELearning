@@ -12,6 +12,16 @@
 
         <!-- Scripts -->
         @routes
+        <script>
+            (function () {
+                try {
+                    var saved = localStorage.getItem('appearance') || 'system';
+                    var dark = saved === 'dark' ||
+                        (saved === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                    document.documentElement.classList.toggle('dark', dark);
+                } catch (e) {}
+            })();
+        </script>
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])
         @inertiaHead

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardRedirectController;
+use App\Http\Controllers\Admin\CourseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,6 +19,23 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', DashboardRedirectController::class)
+    ->middleware('auth')
+    ->name('dashboard');
+
+// admin pada tahap Course CRUD
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::resource('courses', CourseController::class)->except('show');
+    });
+
+// SEMENTARA: akan diganti controller student pada tahap area student
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('courses', fn () => Inertia::render('Dashboard'))->name('courses.index');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

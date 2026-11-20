@@ -61,6 +61,7 @@ class CourseController extends Controller
 
         return Inertia::render('Admin/Courses/Edit', [
             'course' => new CourseResource($course->load('lessons')),
+            'videoRules' => $this->videoRules(),
         ]);
     }
 
@@ -80,5 +81,14 @@ class CourseController extends Controller
         return redirect()
             ->route('admin.courses.index')
             ->with('success', 'Course berhasil dihapus.');
+    }
+
+    private function videoRules(): array
+    {
+        return [
+            'max_size_bytes' => config('video.max_size_kb') * 1024,
+            'allowed_mimes' => config('video.allowed_mimes'),
+            'accept' => implode(',', config('video.allowed_mimes')),
+        ];
     }
 }

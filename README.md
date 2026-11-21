@@ -1,59 +1,168 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Simple E-Learning Tech
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi e-learning untuk belajar pemrograman. Admin mengelola course dan lesson berbasis video; student menelusuri katalog, memilih lesson, dan memutar videonya.
 
-## About Laravel
+## Fitur
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Autentikasi dan akses**
+- Login dan registrasi. Akun yang mendaftar selalu berperan `student`; admin dibuat melalui seeder.
+- Akses dibedakan per role (`admin`, `student`), dan pengguna diarahkan sesuai role setelah login.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Admin**
+- **Course:** daftar dengan pencarian, filter status, dan paginasi; tambah, ubah, hapus. Atribut: judul, deskripsi, status (`draft` / `published`).
+- **Lesson:** tambah, ubah, hapus, dan atur urutan (naik/turun) dalam course.
+- **Video:** unggah, ganti, dan hapus per lesson, dengan progress bar, tombol batal, dan status `uploading`, `ready`, atau `failed`.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Student**
+- Katalog course `published`, detail course beserta daftar lesson, dan halaman belajar dengan pemutar video, daftar lesson, serta navigasi lesson sebelumnya/berikutnya.
 
-## Learning Laravel
+**Umum**
+- Mode terang/gelap (tersimpan di `localStorage`), tampilan responsif, skeleton loading, empty state, dan notifikasi toast.
+- Seluruh teks antarmuka berbahasa Indonesia.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Teknologi
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Teknologi | Alasan |
+|---|---|
+| Laravel 12 (PHP 8.2+) | Diwajibkan brief; menyediakan validasi, otorisasi (Policy), ORM, dan storage |
+| MySQL 8 | Diwajibkan brief; sesuai untuk relasi `users`, `courses`, `lessons` |
+| Inertia.js + React + TypeScript | Diizinkan brief; routing, autentikasi, dan CSRF tetap di Laravel tanpa API terpisah, dengan tipe data yang konsisten |
+| Laravel Breeze | Starter kit autentikasi yang ringan dan mudah dimodifikasi |
+| Tailwind CSS 3 | Styling konsisten; tema terang/gelap melalui CSS variables |
+| Private storage lokal | Video tidak dapat diakses langsung lewat URL, hanya melalui endpoint ber-otorisasi (sesuai catatan teknis brief) |
 
-## Laravel Sponsors
+**Arsitektur:** controller tipis, logika bisnis di `app/Services`, validasi di Form Request, otorisasi di Policy, dan Enum untuk nilai tetap (role, status course, status video).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Persyaratan
 
-### Premium Partners
+- PHP 8.2+ (ekstensi standar Laravel, termasuk `fileinfo`)
+- Composer 2
+- Node.js 18+ dan npm
+- MySQL 8
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Instalasi
 
-## Contributing
+```bash
+git clone <url-repository> elearning
+cd elearning
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+composer install
+cp .env.example .env        # PowerShell: copy .env.example .env
+php artisan key:generate
+```
 
-## Code of Conduct
+Buat database kosong `elearning` (collation `utf8mb4_unicode_ci`), lalu atur `.env`:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=elearning
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## Security Vulnerabilities
+Jalankan migrasi dan build aset:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan migrate --seed
+npm install
+npm run build
+```
 
-## License
+## Konfigurasi Upload Video
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Atur batas ukuran di `.env`:
+
+```env
+VIDEO_DISK=local
+VIDEO_MAX_SIZE_KB=204800   # 200 MB
+```
+
+Nilai ini **tidak boleh melebihi** batas PHP. Ubah `php.ini` (cek lokasinya dengan `php --ini`):
+
+```ini
+upload_max_filesize = 200M
+post_max_size = 210M
+max_execution_time = 300
+```
+
+Mulai ulang server PHP setelah perubahan. Format yang didukung: MP4 dan WebM. Untuk kompatibilitas terbaik, gunakan MP4 dengan video H.264 dan audio AAC.
+
+## Menjalankan Aplikasi
+
+Mode pengembangan (dua terminal):
+
+```bash
+php artisan serve
+npm run dev
+```
+
+Tanpa `npm run dev` (memakai hasil `npm run build`):
+
+```bash
+php artisan serve
+```
+
+Akses `http://127.0.0.1:8000`. Gunakan satu host secara konsisten (jangan bergantian dengan `localhost`) agar cookie sesi tidak terpisah.
+
+## Akun Demo
+
+| Role | Email | Kata sandi |
+|---|---|---|
+| Admin | `admin@example.com` | `password` |
+| Student | `student@example.com` | `password` |
+
+Seeder membuat 3 course (2 `published`, 1 `draft`) dengan total 12 lesson. Jika `database/seeders/sample/sample.mp4` tersedia, dua lesson pertama pada course `published` otomatis memiliki video contoh.
+
+## Pengujian
+
+```bash
+php artisan test
+```
+
+Cakupan: akses berdasarkan role, CRUD course, CRUD dan pengurutan lesson, validasi dan keamanan upload video, serta otorisasi streaming termasuk permintaan HTTP Range.
+
+## Struktur Proyek
+
+```
+app/
+├── Enums/                  UserRole, CourseStatus, VideoStatus
+├── Http/Controllers/       Admin/ (course, lesson, urutan, video), Student/, VideoStreamController
+├── Http/Requests/Admin/    Validasi input
+├── Http/Resources/         Format data ke frontend (admin dan student terpisah)
+├── Policies/               CoursePolicy, LessonPolicy
+└── Services/               CourseService, LessonService, LessonOrderingService,
+                            VideoStorageService, VideoStreamService
+resources/js/
+├── Pages/                  Admin/Courses, Student/Courses, Student/Lessons, Auth, Profile
+├── Components/             Komponen UI bersama (dialog, badge, pemutar video, dll.)
+└── hooks/                  use-appearance, use-video-upload
+```
+
+Diagram arsitektur, ERD, serta alur upload dan streaming video tersedia di [`docs/SYSTEM_DESIGN.md`](docs/SYSTEM_DESIGN.md).
+
+## Keamanan
+
+- Video disimpan di `storage/app/private/videos` dan hanya dapat diputar melalui `/videos/{lesson}/stream`. Endpoint ini mewajibkan login dan lolos `LessonPolicy` (admin; atau student untuk course `published` dengan video berstatus `ready`).
+- Streaming mendukung HTTP Range (206) sehingga video dapat di-seek.
+- Validasi upload memeriksa MIME berdasarkan isi file, bukan ekstensi. File disimpan dengan nama UUID buatan server; nama asli dari pengguna tidak pernah dipakai sebagai path.
+- Role tidak dapat diisi dari input pengguna. Area admin dilindungi middleware role dan Policy.
+- Perlindungan bawaan Laravel: CSRF, query terparameter (Eloquent), dan escape output oleh React.
+
+## Asumsi
+
+- Satu course memiliki banyak lesson; satu lesson memiliki satu video.
+- Admin dibuat melalui seeder; student dapat mendaftar mandiri.
+- Semua student dapat mengakses seluruh course `published` (tanpa enrollment).
+- Penyimpanan lokal digunakan untuk demo; untuk produksi, disk dapat diganti ke object storage.
+
+## Keterbatasan
+
+- Upload berjalan dalam satu request tanpa Queue. Jika koneksi terputus saat transfer, status video sebelumnya dipertahankan. Jika proses PHP dihentikan paksa saat penyimpanan, status dapat tertinggal `uploading`; admin dapat mengunggah ulang.
+- Jika penyimpanan gagal saat penggantian video, status menjadi `failed` dan file lama tetap tersimpan; belum ada pemulihan otomatis.
+- Belum ada transcoding, HLS, atau adaptive bitrate; kompatibilitas bergantung pada codec file asli.
+- Durasi video belum dibaca otomatis; thumbnail course belum digunakan (kolom sudah disiapkan).
+- Pengurutan lesson memakai tombol naik/turun (belum drag-and-drop) dan menunggu respons server.
+- Belum tersedia enrollment, progres belajar, sertifikat, dan verifikasi email.
+- Streaming memakai path file lokal; pada object storage perlu diganti dengan signed URL.

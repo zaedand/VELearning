@@ -12,30 +12,36 @@ export default function Edit({
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Profile
+                <h2 className="text-center text-xl font-semibold leading-tight text-foreground">
+                    Pengaturan Profil
                 </h2>
             }
         >
-            <Head title="Profile" />
+            <Head title="Profil" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
+                {/* max-w-3xl membuat kontainer lebih ramping dan ke tengah */}
+                <div className="mx-auto max-w-3xl space-y-8 px-4 sm:px-6 lg:px-8">
+
+                    {/* Card 1: Informasi Profil */}
+                    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
-                            className="max-w-xl"
+                            className="w-full"
                         />
                     </div>
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-                        <UpdatePasswordForm className="max-w-xl" />
+                    {/* Card 2: Ubah Kata Sandi */}
+                    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
+                        <UpdatePasswordForm className="w-full" />
                     </div>
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-                        <DeleteUserForm className="max-w-xl" />
+                    {/* Card 3: Hapus Akun */}
+                    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
+                        <DeleteUserForm className="w-full" />
                     </div>
+
                 </div>
             </div>
         </AuthenticatedLayout>

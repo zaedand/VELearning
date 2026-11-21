@@ -34,7 +34,7 @@ export default function Welcome() {
 
                 {/* Teks Sambutan */}
                 <h1 className="mb-4 text-5xl font-extrabold tracking-tight text-white sm:text-6xl">
-                    E-Learning <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Tech</span>
+                    E-Learning <span className="text-transparent bg-clip-text bg-orange-500">Tech</span>
                 </h1>
 
                 <p className="max-w-md text-lg text-gray-300 mb-8 leading-relaxed">
@@ -46,7 +46,7 @@ export default function Welcome() {
                     {auth?.user ? (
                         <Link
                             href={route('dashboard')}
-                            className="flex-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 px-8 py-3.5 text-center text-sm font-bold text-black transition-all duration-300 hover:scale-105 hover:brightness-110 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
+                            className="flex-1 rounded-lg bg-yellow-400 px-8 py-3.5 text-center text-sm font-bold text-black transition-all duration-300 hover:scale-105 hover:brightness-110 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
                         >
                             Masuk ke Dashboard
                         </Link>
@@ -54,7 +54,7 @@ export default function Welcome() {
                         <>
                             <Link
                                 href={route('login')}
-                                className="flex-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 px-8 py-3.5 text-center text-sm font-bold text-black transition-all duration-300 hover:scale-105 hover:brightness-110 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
+                                className="flex-1 rounded-lg bg-orange-500 px-8 py-3.5 text-center text-sm font-bold text-black transition-all duration-300 hover:scale-105 hover:brightness-110 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
                             >
                                 Masuk
                             </Link>

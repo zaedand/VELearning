@@ -2,6 +2,10 @@
 
 Aplikasi e-learning untuk belajar pemrograman. Admin mengelola course dan lesson berbasis video; student menelusuri katalog, memilih lesson, dan memutar videonya.
 
+# Video Demo
+
+**[Klik di sini untuk Menonton ](https://drive.google.com/file/d/1Trq2Ensi_t83SCMa29AsjJ2gech8ZJB4/view?usp=sharing)**
+
 ## Fitur
 
 **Autentikasi dan akses**

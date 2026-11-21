@@ -21,4 +21,18 @@ class LessonPolicy
     {
         return $user->isAdmin();
     }
+
+    public function view(User $user, Lesson $lesson): bool
+    {
+        return $user->isAdmin() || $lesson->course->isPublished();
+    }
+
+    public function stream(User $user, Lesson $lesson): bool
+    {
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $lesson->course->isPublished() && $lesson->hasReadyVideo();
+    }
 }

@@ -25,6 +25,17 @@ class CourseService
             ->withQueryString();
     }
 
+    public function paginatePublished(?string $search, int $perPage = 9): LengthAwarePaginator
+    {
+        return Course::query()
+            ->published()
+            ->withCount('lessons')
+            ->when($search, fn (Builder $query, string $term) => $query->where('title', 'like', "%{$term}%"))
+            ->latest()
+            ->paginate($perPage)
+            ->withQueryString();
+    }
+
     public function create(array $data, User $creator): Course
     {
         return Course::create([

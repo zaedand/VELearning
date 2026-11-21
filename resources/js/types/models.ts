@@ -62,3 +62,21 @@ export interface VideoRules {
     allowed_mimes: string[];
     accept: string;
 }
+
+export interface StudentLesson {
+    id: number;
+    title: string;
+    description: string | null;
+    sort_order: number;
+    has_ready_video: boolean;
+    duration_seconds: number | null;
+}
+
+export interface StudentCourse {
+    id: number;
+    title: string;
+    slug: string;
+    description: string;
+    lessons_count?: number;
+    lessons?: StudentLesson[];
+}

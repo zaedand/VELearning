@@ -4,7 +4,9 @@ Aplikasi e-learning untuk belajar pemrograman. Admin mengelola course dan lesson
 
 # Video Demo
 
-<video src="./public/DemoELearning.mp4" controls="controls" muted="muted" style="max-width: 100%; border-radius: 8px;"></video>
+# Video Demo
+
+<iframe src="https://drive.google.com/file/d/1Trq2Ensi_t83SCMa29AsjJ2gech8ZJB4/preview" width="100%" height="480" allow="autoplay"></iframe>
 
 ## Fitur
 

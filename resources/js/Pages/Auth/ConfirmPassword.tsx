@@ -13,41 +13,45 @@ export default function ConfirmPassword() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         post(route('password.confirm'), {
             onFinish: () => reset('password'),
         });
     };
 
+    // Perbaikan inputClass agar dinamis mengikuti tema
+    const inputClass = "mt-1 block w-full bg-background border-border text-foreground focus:border-amber-500 focus:ring-amber-500 placeholder-muted-foreground";
+
     return (
         <GuestLayout>
-            <Head title="Confirm Password" />
+            <Head title="Konfirmasi Kata Sandi" />
 
-            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                This is a secure area of the application. Please confirm your
-                password before continuing.
+            {/* Perbaikan text-white menjadi text-foreground */}
+            <div className="mb-6 text-center text-2xl font-bold text-foreground">Area Aman</div>
+
+            {/* Perbaikan text-gray-400 menjadi text-muted-foreground */}
+            <div className="mb-4 text-sm text-muted-foreground leading-relaxed">
+                Ini adalah area aman. Mohon konfirmasi kata sandi Anda sebelum melanjutkan.
             </div>
 
             <form onSubmit={submit}>
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
+                    {/* Perbaikan text-gray-300 menjadi text-foreground */}
+                    <InputLabel htmlFor="password" value="Kata Sandi" className="text-foreground" />
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className={inputClass}
                         isFocused={true}
                         onChange={(e) => setData('password', e.target.value)}
                     />
-
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Confirm
+                <div className="mt-6 flex items-center justify-end">
+                    <PrimaryButton className="bg-amber-500 text-black hover:bg-amber-600 active:bg-amber-700" disabled={processing}>
+                        Konfirmasi
                     </PrimaryButton>
                 </div>
             </form>
